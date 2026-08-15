@@ -1,0 +1,205 @@
+.dashboard {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 17rem 1fr;
+  background: var(--color-bg-deep);
+}
+
+.dashboard__barra-lateral {
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+  padding: 2rem 1.5rem;
+  background: var(--color-bg-surface);
+  border-right: 1px solid var(--color-border);
+}
+
+.marca-lateral {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--color-text-primary);
+}
+
+.marca-lateral__icono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.55rem;
+  background: rgba(0, 102, 255, 0.12);
+  color: var(--color-accent);
+  border: 1px solid rgba(0, 102, 255, 0.35);
+}
+
+.marca-lateral__icono svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.navegacion {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.navegacion__item {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  padding: 0.65rem 0.8rem;
+  border-radius: 0.5rem;
+  cursor: default;
+}
+
+.navegacion__item--activo {
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+}
+
+.tarjeta-usuario {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.85rem;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: 0.65rem;
+}
+
+.tarjeta-usuario__avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: var(--color-text-primary);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.tarjeta-usuario__info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.tarjeta-usuario__nombre {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tarjeta-usuario__rol {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.boton-salir {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 0.55rem;
+  padding: 0.65rem 0.8rem;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.boton-salir:hover {
+  color: var(--color-text-primary);
+  border-color: var(--color-accent);
+}
+
+.boton-salir:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.dashboard__contenido {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.estado-vacio {
+  max-width: 26rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.estado-vacio__icono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 0.85rem;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-accent);
+}
+
+.estado-vacio__icono svg {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.estado-vacio h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.4rem;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.estado-vacio p {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+@media (max-width: 720px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .dashboard__barra-lateral {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .navegacion {
+    display: none;
+  }
+
+  .tarjeta-usuario {
+    margin-top: 0;
+    margin-left: auto;
+  }
+}

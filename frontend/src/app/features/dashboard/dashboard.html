@@ -1,0 +1,51 @@
+<div class="dashboard">
+  <aside class="dashboard__barra-lateral">
+    <div class="marca-lateral">
+      <span class="marca-lateral__icono">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 17L9.5 11.5L13.5 15.5L20 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M15 8H20V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span>Balance</span>
+    </div>
+
+    <nav class="navegacion">
+      <span class="navegacion__item navegacion__item--activo">Resumen</span>
+      <span class="navegacion__item">Ingresos</span>
+      <span class="navegacion__item">Egresos</span>
+      <span class="navegacion__item">Reportes</span>
+    </nav>
+
+    @if (usuario(); as datosUsuario) {
+      <div class="tarjeta-usuario">
+        <div class="tarjeta-usuario__avatar">{{ datosUsuario.nombre.charAt(0) }}</div>
+        <div class="tarjeta-usuario__info">
+          <span class="tarjeta-usuario__nombre">{{ datosUsuario.nombre }}</span>
+          <span class="tarjeta-usuario__rol">{{ datosUsuario.rol === 'ADMIN' ? 'Administrador' : 'Usuario' }}</span>
+        </div>
+      </div>
+    }
+
+    <button type="button" class="boton-salir" (click)="cerrarSesion()">
+      Cerrar sesion
+    </button>
+  </aside>
+
+  <main class="dashboard__contenido">
+    <div class="estado-vacio">
+      <span class="estado-vacio__icono">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M3 9H21" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M8 14L11 17L16 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <h1>El panel esta en construccion</h1>
+      <p>
+        Iniciaste sesion correctamente. El resumen de ingresos, egresos y reportes
+        se habilitara en las proximas entregas del proyecto.
+      </p>
+    </div>
+  </main>
+</div>
