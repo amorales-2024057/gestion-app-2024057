@@ -28,12 +28,12 @@ export const authService = {
 
         const usuario = await usuarioRepository.buscarPorUsername(username);
         if (!usuario) {
-            throw new ApiError(401, 'Credenciales invalidas.');
+            throw new ApiError(401, 'Credenciales inválidas.');
         }
 
         const passwordValida = await bcrypt.compare(password, usuario.password);
         if (!passwordValida) {
-            throw new ApiError(401, 'Credenciales invalidas.');
+            throw new ApiError(401, 'Credenciales inválidas.');
         }
 
         const payload: JwtPayload = {

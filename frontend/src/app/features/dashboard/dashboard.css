@@ -1,17 +1,58 @@
 .dashboard {
+  position: relative;
   min-height: 100vh;
   display: grid;
   grid-template-columns: 17rem 1fr;
   background: var(--color-bg-deep);
+  overflow: hidden;
+}
+
+.dashboard::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  width: 30rem;
+  height: 30rem;
+  top: -12rem;
+  right: -10rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 102, 255, 0.14), transparent 70%);
+  filter: blur(80px);
+  pointer-events: none;
+  animation: aurora-flotar-a 16s ease-in-out infinite;
 }
 
 .dashboard__barra-lateral {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: 2.25rem;
   padding: 2rem 1.5rem;
   background: var(--color-bg-surface);
   border-right: 1px solid var(--color-border);
+  opacity: 0;
+  animation: entrada-lateral 0.5s ease forwards;
+}
+
+@keyframes aurora-flotar-a {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-2rem, 2.5rem) scale(1.1);
+  }
+}
+
+@keyframes entrada-lateral {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .marca-lateral {
@@ -47,18 +88,55 @@
 }
 
 .navegacion__item {
+  position: relative;
   font-family: var(--font-body);
   font-size: 0.9rem;
   color: var(--color-text-secondary);
   padding: 0.65rem 0.8rem;
   border-radius: 0.5rem;
   cursor: default;
+  border: 1px solid transparent;
+  opacity: 0;
+  transform: translateX(-8px);
+  animation: entrada-item 0.4s ease forwards;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.navegacion__item:nth-child(1) { animation-delay: 0.08s; }
+.navegacion__item:nth-child(2) { animation-delay: 0.14s; }
+.navegacion__item:nth-child(3) { animation-delay: 0.2s; }
+.navegacion__item:nth-child(4) { animation-delay: 0.26s; }
+
+.navegacion__item:hover {
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  transform: translateX(2px);
 }
 
 .navegacion__item--activo {
   background: var(--color-bg-elevated);
   color: var(--color-text-primary);
-  border: 1px solid var(--color-border);
+  border-color: var(--color-border);
+}
+
+.navegacion__item--activo::before {
+  content: '';
+  position: absolute;
+  left: -0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0.2rem;
+  height: 1.1rem;
+  border-radius: 0.2rem;
+  background: var(--color-accent);
+  box-shadow: 0 0 8px rgba(0, 102, 255, 0.7);
+}
+
+@keyframes entrada-item {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .tarjeta-usuario {
@@ -70,6 +148,12 @@
   background: var(--color-bg-elevated);
   border: 1px solid var(--color-border);
   border-radius: 0.65rem;
+  transition: border-color 0.2s ease, transform 0.15s ease;
+}
+
+.tarjeta-usuario:hover {
+  border-color: rgba(0, 102, 255, 0.4);
+  transform: translateY(-1px);
 }
 
 .tarjeta-usuario__avatar {
@@ -124,6 +208,7 @@
 .boton-salir:hover {
   color: var(--color-text-primary);
   border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.12);
 }
 
 .boton-salir:focus-visible {
@@ -132,6 +217,8 @@
 }
 
 .dashboard__contenido {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -145,6 +232,19 @@
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  opacity: 0;
+  animation: entrada-tarjeta 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards 0.15s;
+}
+
+@keyframes entrada-tarjeta {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .estado-vacio__icono {
@@ -157,6 +257,18 @@
   background: var(--color-bg-surface);
   border: 1px solid var(--color-border);
   color: var(--color-accent);
+  animation: icono-flotar 3.4s ease-in-out infinite;
+}
+
+@keyframes icono-flotar {
+  0%, 100% {
+    transform: translateY(0);
+    box-shadow: 0 0 0 0 rgba(0, 102, 255, 0);
+  }
+  50% {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 18px -10px rgba(0, 102, 255, 0.5);
+  }
 }
 
 .estado-vacio__icono svg {
@@ -201,5 +313,17 @@
   .tarjeta-usuario {
     margin-top: 0;
     margin-left: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard::before,
+  .dashboard__barra-lateral,
+  .navegacion__item,
+  .estado-vacio,
+  .estado-vacio__icono {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }

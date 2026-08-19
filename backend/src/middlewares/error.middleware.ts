@@ -8,12 +8,15 @@ export function manejadorErrores(
     _next: NextFunction
 ): void {
     if (error instanceof ApiError) {
-        res.status(error.status).json({ mensaje: error.message });
+        res.status(error.status).json({
+            mensaje: error.message,
+            ...(error.codigo ? { codigo: error.codigo } : {}),
+        });
         return;
     }
 
     console.error('Error no controlado:', error);
-    res.status(500).json({ mensaje: 'Ocurrio un error interno en el servidor.' });
+    res.status(500).json({ mensaje: 'Ocurrió un error interno en el servidor.' });
 }
 
 export function rutaNoEncontrada(_req: Request, res: Response): void {

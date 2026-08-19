@@ -16,7 +16,7 @@ export function verificarToken(
     const encabezado = req.headers.authorization;
 
     if (!encabezado || !encabezado.startsWith('Bearer ')) {
-        throw new ApiError(401, 'No se proporciono un token de acceso.');
+        throw new ApiError(401, 'No se proporcionó un token de acceso.', 'TOKEN_AUSENTE');
     }
 
     const token = encabezado.split(' ')[1];
@@ -25,7 +25,15 @@ export function verificarToken(
         const payload = jwt.verify(token, env.jwtSecret) as JwtPayload;
         req.usuario = payload;
         next();
-    } catch {
-        throw new ApiError(401, 'El token es invalido o ha expirado.');
+    } catch (error) {
+        if (error instanceof jwt.TokenExpiredError) {
+            throw new ApiError(
+                401,
+                'Tu sesión ha expirado por inactividad. Por favor, inicia sesión nuevamente.',
+                'TOKEN_EXPIRADO'
+            );
+        }
+
+        throw new ApiError(401, 'El token es inválido.', 'TOKEN_INVALIDO');
     }
 }
