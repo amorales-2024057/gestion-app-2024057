@@ -88,9 +88,6 @@
   width: 2.25rem;
   height: 2.25rem;
   border-radius: 0.65rem;
-  background: rgba(0, 102, 255, 0.12);
-  color: var(--color-accent);
-  border: 1px solid rgba(0, 102, 255, 0.35);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
@@ -99,9 +96,10 @@
   box-shadow: 0 0 18px rgba(0, 102, 255, 0.4);
 }
 
-.marca__icono svg {
-  width: 1.2rem;
-  height: 1.2rem;
+.marca__icono img {
+  width: 1.5rem;
+  height: 1.5rem;
+  object-fit: contain;
 }
 
 .marca__nombre {
