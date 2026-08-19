@@ -13,11 +13,55 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 4rem 4.5rem;
-  background:
-    radial-gradient(circle at 15% 15%, rgba(0, 102, 255, 0.14), transparent 55%),
-    var(--color-bg-deep);
+  background: var(--color-bg-deep);
   overflow: hidden;
   border-right: 1px solid var(--color-border);
+}
+
+.panel-marca::before,
+.panel-marca::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.panel-marca::before {
+  width: 26rem;
+  height: 26rem;
+  top: -8rem;
+  left: -6rem;
+  background: radial-gradient(circle, rgba(0, 102, 255, 0.28), transparent 70%);
+  animation: aurora-flotar-a 14s ease-in-out infinite;
+}
+
+.panel-marca::after {
+  width: 22rem;
+  height: 22rem;
+  bottom: -9rem;
+  right: -7rem;
+  background: radial-gradient(circle, rgba(0, 102, 255, 0.16), transparent 70%);
+  animation: aurora-flotar-b 18s ease-in-out infinite;
+}
+
+@keyframes aurora-flotar-a {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(2.5rem, 3rem) scale(1.12);
+  }
+}
+
+@keyframes aurora-flotar-b {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-2rem, -2.5rem) scale(1.08);
+  }
 }
 
 .panel-marca__contenido {
@@ -27,10 +71,14 @@
 }
 
 .marca {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   gap: 0.65rem;
   margin-bottom: 3.5rem;
+  opacity: 0;
+  animation: entrada-suave 0.6s ease forwards;
 }
 
 .marca__icono {
@@ -43,6 +91,12 @@
   background: rgba(0, 102, 255, 0.12);
   color: var(--color-accent);
   border: 1px solid rgba(0, 102, 255, 0.35);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.marca:hover .marca__icono {
+  transform: rotate(-8deg) scale(1.06);
+  box-shadow: 0 0 18px rgba(0, 102, 255, 0.4);
 }
 
 .marca__icono svg {
@@ -58,6 +112,8 @@
 }
 
 .panel-marca__titulo {
+  position: relative;
+  z-index: 1;
   font-family: var(--font-display);
   font-weight: 500;
   font-size: clamp(2.1rem, 3.4vw, 2.9rem);
@@ -65,15 +121,32 @@
   color: var(--color-text-primary);
   margin: 0 0 1.1rem;
   letter-spacing: -0.01em;
+  opacity: 0;
+  animation: entrada-suave 0.6s ease forwards 0.1s;
 }
 
 .panel-marca__subtitulo {
+  position: relative;
+  z-index: 1;
   font-family: var(--font-body);
   font-size: 1rem;
   line-height: 1.6;
   color: var(--color-text-secondary);
   max-width: 24rem;
   margin: 0;
+  opacity: 0;
+  animation: entrada-suave 0.6s ease forwards 0.2s;
+}
+
+@keyframes entrada-suave {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .grafico-flujo {
@@ -161,6 +234,24 @@
   border-radius: 1rem;
   padding: 2.5rem 2.25rem;
   box-shadow: 0 20px 50px -25px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  animation: entrada-tarjeta 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards 0.15s;
+  transition: box-shadow 0.3s ease;
+}
+
+.tarjeta-login:hover {
+  box-shadow: 0 24px 60px -22px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(0, 102, 255, 0.12);
+}
+
+@keyframes entrada-tarjeta {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .tarjeta-login__encabezado h2 {
@@ -282,6 +373,7 @@
 }
 
 .boton-enviar {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -296,11 +388,26 @@
   padding: 0.8rem 1rem;
   cursor: pointer;
   margin-top: 0.4rem;
-  transition: filter 0.15s ease, transform 0.1s ease;
+  overflow: hidden;
+  transition: filter 0.15s ease, transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+.boton-enviar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, 0.28) 50%, transparent 80%);
+  transform: translateX(-120%);
+  transition: transform 0.5s ease;
+}
+
+.boton-enviar:hover:not(:disabled)::before {
+  transform: translateX(120%);
 }
 
 .boton-enviar:hover:not(:disabled) {
   filter: brightness(1.08);
+  box-shadow: 0 10px 24px -12px rgba(0, 102, 255, 0.6);
 }
 
 .boton-enviar:active:not(:disabled) {
@@ -366,9 +473,16 @@
 @media (prefers-reduced-motion: reduce) {
   .grafico-flujo__linea,
   .grafico-flujo__punto,
-  .boton-enviar__spinner {
+  .boton-enviar__spinner,
+  .panel-marca::before,
+  .panel-marca::after,
+  .marca,
+  .panel-marca__titulo,
+  .panel-marca__subtitulo,
+  .tarjeta-login {
     animation: none;
     stroke-dashoffset: 0;
     opacity: 1;
+    transform: none;
   }
 }
